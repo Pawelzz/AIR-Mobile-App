@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">AIR Mobile App</string>
+
+    <string name="btn_run">GET MEASUREMENTS</string>
+    <string name="freq_txt">Sampling frequency [Hz]:</string>
+    <string name="freq_hint">Value between 0.1 and 5</string>
 </resources>
