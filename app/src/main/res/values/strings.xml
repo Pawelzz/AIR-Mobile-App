@@ -4,4 +4,6 @@
     <string name="btn_run">GET MEASUREMENTS</string>
     <string name="freq_txt">Sampling frequency [Hz]:</string>
     <string name="freq_hint">Value between 0.1 and 5</string>
+    <string name="sig_1">First signal</string>
+    <string name="sig_2">Second signal</string>
 </resources>

@@ -15,7 +15,10 @@ import java.util.concurrent.TimeoutException
 
 class ServerPlot(private val ip: String, context: Context) {
     private var protocol: String = "http://"
-    private var script: String = "/control.php?task=sensors&pressure=Pa&humidity=Prcnt"
+    var val1: String = "pressure=Pa"
+    var val2: String = "humidity=Prcnt"
+//    private var script: String = "/control.php?task=sensors&pressure=Pa&humidity=Prcnt"
+private var script: String = "/control.php?task=sensors&$val1&$val2"
     private var timeout: Int = 1000
     var requestCounter: Int = -1
     private var signal1val: Double = 0.0
@@ -26,12 +29,17 @@ class ServerPlot(private val ip: String, context: Context) {
 
     fun getSignals(t: Double): Array<Double> {
         val time = timeout/t
+        updateScript()
         val result = getResponse(time)
         json = JSONTokener(result).nextValue() as JSONObject
-        signal1val = json.getDouble("Pressure")
-        signal2val = json.getDouble("Humidity")
-        Log.i("Pressure", signal1val.toString())
-        Log.i("Humidity", signal2val.toString())
+//        signal1val = json.getDouble("Pressure")
+//        signal2val = json.getDouble("Humidity")
+//        Log.i("Pressure", signal1val.toString())
+//        Log.i("Humidity", signal2val.toString())
+        signal1val = json.getDouble(val1)
+        signal2val = json.getDouble(val2)
+        Log.i(val1, signal1val.toString())
+        Log.i(val2, signal2val.toString())
         return arrayOf(signal1val, signal2val)
     }
 
@@ -68,5 +76,40 @@ class ServerPlot(private val ip: String, context: Context) {
             e.printStackTrace()
             return response
         }
+    }
+
+    private fun updateScript() {
+        var sig1 = ""
+        var sig2 = ""
+        when (val1) {
+            "Pressure" -> {
+                sig1 = "pressure=Pa"
+            }
+            "Humidity" -> {
+                sig1 = "humidity=Prcnt"
+            }
+            "Temperature" -> {
+                sig1 = "temperature=C"
+            }
+            else -> {
+                println("Value is unknown")
+            }
+        }
+
+        when (val2) {
+            "Pressure" -> {
+                sig2 = "pressure=Pa"
+            }
+            "Humidity" -> {
+                sig2 = "humidity=Prcnt"
+            }
+            "Temperature" -> {
+                sig2 = "temperature=C"
+            }
+            else -> {
+                println("Value is unknown")
+            }
+        }
+        script = "/control.php?task=sensors&$sig1&$sig2"
     }
 }
