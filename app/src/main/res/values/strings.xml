@@ -6,4 +6,35 @@
     <string name="freq_hint">Value between 0.1 and 5</string>
     <string name="sig_1">First signal</string>
     <string name="sig_2">Second signal</string>
+
+    <string name="title_name">MEASUREMENTS</string>
+    <string name="title_val">VALUE</string>
+    <string name="title_unit">UNIT</string>
+
+    <string name="name_roll">Roll</string>
+    <string name="name_pitch">Pitch</string>
+    <string name="name_yaw">Yaw</string>
+    <string name="name_press">Pressure</string>
+    <string name="name_temp">Temperature</string>
+    <string name="name_humidity">Humidity</string>
+    <string name="name_mid">Counter Mid</string>
+    <string name="name_x">Counter X</string>
+    <string name="name_y">Counter Y</string>
+
+    <string name="val_roll">0</string>
+    <string name="val_pitch">0</string>
+    <string name="val_yaw">0</string>
+    <string name="val_press">0</string>
+    <string name="val_temp">0</string>
+    <string name="val_humidity">0</string>
+    <string name="val_mid">0</string>
+    <string name="val_x">0</string>
+    <string name="val_y">0</string>
+
+    <string name="unit_angle">deg(\u00B0)</string>
+    <string name="unit_press">hPa</string>
+    <string name="unit_temp">\u00B0C</string>
+    <string name="unit_humidity">%</string>
+    <string name="unit_counter">--</string>
+
 </resources>

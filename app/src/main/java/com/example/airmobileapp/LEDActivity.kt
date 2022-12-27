@@ -102,7 +102,7 @@ class LEDActivity : AppCompatActivity() {
         blueSeekBar = findViewById<SeekBar>(R.id.seekBarB)
         colorView = findViewById(R.id.colorView)
 
-        url = "http://192.168.56.15/moj_led.php"
+        url = "http://192.168.56.15/LED.php"
 
 //        clearDisplayModel()
 
