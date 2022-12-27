@@ -1,6 +1,8 @@
 package com.example.airmobileapp
 
+import android.annotation.SuppressLint
 import android.content.Intent
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -9,15 +11,23 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.SeekBar
 import android.widget.TableLayout
+import androidx.core.content.ContentProviderCompat.requireContext
+import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import com.android.volley.DefaultRetryPolicy
 import com.android.volley.RequestQueue
 import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
+import org.json.JSONArray
 import java.util.*
+import org.json.JSONObject
+import org.json.JSONTokener
+import kotlin.reflect.typeOf
 
 class LEDActivity : AppCompatActivity() {
+
+    private lateinit var json: JSONArray
 
     lateinit var urlText: EditText
 
@@ -41,6 +51,12 @@ class LEDActivity : AppCompatActivity() {
             arrayOfNulls<Int>(3)
         }
     }
+
+//    var ledDisplayModel = Array(8) {
+//        Array(8) {
+//            arrayOf<Int>(3)
+//        }
+//    }
 
     private var queue: RequestQueue? = null
     var paramsClear: HashMap<String, String> = HashMap()
@@ -75,7 +91,7 @@ class LEDActivity : AppCompatActivity() {
             ResourcesCompat.getColor(resources, R.color.ledIndBackground, null)
         ledOffColorVec = intToRgb(ledOffColor)
 
-        ledActiveColor = ledOffColor
+//        ledActiveColor = ledOffColor
 
         ledActiveColorR = 0x00
         ledActiveColorG = 0x00
@@ -88,7 +104,7 @@ class LEDActivity : AppCompatActivity() {
 
         url = "http://192.168.56.15/moj_led.php"
 
-        clearDisplayModel()
+//        clearDisplayModel()
 
         redSeekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             var progressChangedValue = 0
@@ -149,6 +165,7 @@ class LEDActivity : AppCompatActivity() {
                 paramsClear.put(ledIndexToTag(i, j), data)
             }
         }
+        sendGetRequest()
     }
 
     fun argbToInt(_a: Int, _r: Int, _g: Int, _b: Int): Int {
@@ -253,6 +270,13 @@ class LEDActivity : AppCompatActivity() {
                 if (ledColorNotNull(i, j)) {
                     led = ledIndexToTag(i, j)
                     position_color_data = ledIndexToJsonData(i, j)
+                    Log.d("sssss", led)
+                    Log.d("sssss", position_color_data)
+                    params.put(led, position_color_data)
+                }
+                else{
+                    led = ledIndexToTag(i, j)
+                    position_color_data = "[$i,$j,0,0,0]"
                     params.put(led, position_color_data)
                 }
             }
@@ -325,7 +349,9 @@ class LEDActivity : AppCompatActivity() {
             Method.GET, url,
             Response.Listener { response ->
                 Log.d("Response", response!!)
+                get_Json(response)
                 // TODO: check if ACK is valid
+
             },
             Response.ErrorListener { error ->
                 val msg = error.message
@@ -347,6 +373,42 @@ class LEDActivity : AppCompatActivity() {
 
     fun sendGet(v: View) {
         sendGetRequest()
+    }
+
+    fun get_Json(response: String) {
+        json = JSONTokener(response).nextValue() as JSONArray
+        lightLed(json)
+
+    }
+
+    fun lightLed(array: JSONArray) {
+        val tb = findViewById<View>(R.id.ledTable) as TableLayout
+        var ledInd: View
+
+        for (i in 0 until array.length()) {
+            val item = array.getJSONArray(i)
+
+            Log.i("siema", item.toString())
+
+            ledInd = tb.findViewWithTag(ledIndexToTag(item[0] as Int, item[1] as Int))
+
+            val int_R =  item[2] as Int
+            val int_G =  item[3] as Int
+            val int_B =  item[4] as Int
+
+            val int_A = (int_R + int_G + int_B) / 3
+
+            if (int_A == 0){
+                ledInd.setBackgroundColor(ledOffColor)
+            }
+            else
+                ledInd.setBackgroundColor(Color.argb(int_A, int_R, int_G, int_B))
+
+            ledDisplayModel[item[0] as Int][item[1] as Int][0] = int_R
+            ledDisplayModel[item[0] as Int][item[1] as Int][0] = int_G
+            ledDisplayModel[item[0] as Int][item[1] as Int][0] = int_B
+
+        }
     }
 
 }
