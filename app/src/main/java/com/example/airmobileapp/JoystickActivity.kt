@@ -5,7 +5,37 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 
+import android.annotation.SuppressLint
+import android.util.Log
+import android.view.View
+import android.widget.EditText
+import android.widget.SeekBar
+import android.widget.TableLayout
+import androidx.core.content.ContentProviderCompat.requireContext
+import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
+import com.android.volley.DefaultRetryPolicy
+import com.android.volley.RequestQueue
+import com.android.volley.Response
+import com.android.volley.toolbox.StringRequest
+import com.android.volley.toolbox.Volley
+import kotlinx.android.synthetic.main.activity_joystick.*
+import org.json.JSONArray
+import java.util.*
+import org.json.JSONObject
+import org.json.JSONTokener
+import kotlin.reflect.typeOf
+
+
+
 class JoystickActivity : AppCompatActivity() {
+
+    lateinit var url: String
+
+    private var queue: RequestQueue? = null
+    private var response: String = ""
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_joystick)
@@ -30,5 +60,201 @@ class JoystickActivity : AppCompatActivity() {
             val intent = Intent(this, TableActivity::class.java)
             startActivity(intent)
         }
+
+
+        url = "http://192.168.56.15/control.php"
+
+        queue = Volley.newRequestQueue(this)
+
+        updateValues()
+    }
+
+    fun onBtnUp(v: View) {
+        val specific_url = "$url?task=click&button=up"
+        Log.i("URL", specific_url)
+        val postRequest: StringRequest = object : StringRequest(
+            Method.GET, specific_url,
+            Response.Listener { response ->
+                if (response != "ACK") Log.d(
+                    "Response",
+                    """
+                  
+                  $response
+                  """.trimIndent()
+                )
+                updateValues()
+            },
+            Response.ErrorListener { error ->
+                val msg = error.message
+                if (msg != null) Log.d("Error.Response", msg) else {
+                    // TODO: error type specific code
+                }
+            }
+        ) {
+        }
+        postRequest.retryPolicy = DefaultRetryPolicy(
+            5000, 0,
+            DefaultRetryPolicy.DEFAULT_BACKOFF_MULT
+        )
+        queue!!.add(postRequest)
+
+    }
+
+    fun onBtnDown(v: View) {
+        val specific_url = "$url?task=click&button=down"
+        Log.i("URL", specific_url)
+        val postRequest: StringRequest = object : StringRequest(
+            Method.GET, specific_url,
+            Response.Listener { response ->
+                if (response != "ACK") Log.d(
+                    "Response",
+                    """
+                  
+                  $response
+                  """.trimIndent()
+                )
+                updateValues()
+            },
+            Response.ErrorListener { error ->
+                val msg = error.message
+                if (msg != null) Log.d("Error.Response", msg) else {
+                    // TODO: error type specific code
+                }
+            }
+        ) {
+        }
+        postRequest.retryPolicy = DefaultRetryPolicy(
+            5000, 0,
+            DefaultRetryPolicy.DEFAULT_BACKOFF_MULT
+        )
+        queue!!.add(postRequest)
+
+    }
+
+    fun onBtnLeft(v: View) {
+        val specific_url = "$url?task=click&button=left"
+        Log.i("URL", specific_url)
+        val postRequest: StringRequest = object : StringRequest(
+            Method.GET, specific_url,
+            Response.Listener { response ->
+                if (response != "ACK") Log.d(
+                    "Response",
+                    """
+                  
+                  $response
+                  """.trimIndent()
+                )
+                updateValues()
+            },
+            Response.ErrorListener { error ->
+                val msg = error.message
+                if (msg != null) Log.d("Error.Response", msg) else {
+                    // TODO: error type specific code
+                }
+            }
+        ) {
+        }
+        postRequest.retryPolicy = DefaultRetryPolicy(
+            5000, 0,
+            DefaultRetryPolicy.DEFAULT_BACKOFF_MULT
+        )
+        queue!!.add(postRequest)
+
+    }
+
+    fun onBtnRight(v: View) {
+        val specific_url = "$url?task=click&button=right"
+        Log.i("URL", specific_url)
+        val postRequest: StringRequest = object : StringRequest(
+            Method.GET, specific_url,
+            Response.Listener { response ->
+                if (response != "ACK") Log.d(
+                    "Response",
+                    """
+                  
+                  $response
+                  """.trimIndent()
+                )
+                updateValues()
+            },
+            Response.ErrorListener { error ->
+                val msg = error.message
+                if (msg != null) Log.d("Error.Response", msg) else {
+                    // TODO: error type specific code
+                }
+            }
+        ) {
+        }
+        postRequest.retryPolicy = DefaultRetryPolicy(
+            5000, 0,
+            DefaultRetryPolicy.DEFAULT_BACKOFF_MULT
+        )
+        queue!!.add(postRequest)
+
+    }
+
+    fun onBtnCenter(v: View) {
+        val specific_url = "$url?task=click&button=mid"
+        Log.i("URL", specific_url)
+        val postRequest: StringRequest = object : StringRequest(
+            Method.GET, specific_url,
+            Response.Listener { response ->
+                if (response != "ACK") Log.d(
+                    "Response",
+                    """
+                  
+                  $response
+                  """.trimIndent()
+                )
+                updateValues()
+            },
+            Response.ErrorListener { error ->
+                val msg = error.message
+                if (msg != null) Log.d("Error.Response", msg) else {
+                    // TODO: error type specific code
+                }
+            }
+        ) {
+        }
+        postRequest.retryPolicy = DefaultRetryPolicy(
+            5000, 0,
+            DefaultRetryPolicy.DEFAULT_BACKOFF_MULT
+        )
+        queue!!.add(postRequest)
+
+    }
+
+
+    fun updateValues(){
+        val specific_url = "$url?task=joystick"
+        Log.i("URL", specific_url)
+        val postRequest: StringRequest = object : StringRequest(
+            Method.GET, specific_url,
+            Response.Listener { response ->
+                if (response != "ACK") Log.d(
+                    "Response",
+                    """
+                  
+                  $response
+                  """.trimIndent()
+                )
+                Counter_MID.text = JSONObject(response).get("counter_mid").toString()
+                Counter_X.text = JSONObject(response).get("counter_x").toString()
+                Counter_Y.text = JSONObject(response).get("counter_y").toString()
+            },
+            Response.ErrorListener { error ->
+                val msg = error.message
+                if (msg != null) Log.d("Error.Response", msg) else {
+                    // TODO: error type specific code
+                }
+            }
+        ) {
+        }
+        postRequest.retryPolicy = DefaultRetryPolicy(
+            5000, 0,
+            DefaultRetryPolicy.DEFAULT_BACKOFF_MULT
+        )
+        queue!!.add(postRequest)
+
     }
 }
