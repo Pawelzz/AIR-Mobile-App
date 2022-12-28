@@ -63,7 +63,7 @@ class JoystickActivity : AppCompatActivity() {
         }
 
 
-        url = "http://$ip/control.php"
+        url = "http://$ip:$port/control.php"
 
         queue = Volley.newRequestQueue(this)
 
