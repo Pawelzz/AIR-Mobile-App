@@ -44,7 +44,7 @@ class ServerTable(private val ip: String, context: Context) {
     }
 
     private fun getResponse(t: Double): String {
-        val url: String = protocol + ip + script
+        val url = "$protocol$ip:$port$script"
 //        val url: String = "https://api.coingecko.com/api/v3/ping"
         Log.i("##URL##", url)
         val time = t.toLong()

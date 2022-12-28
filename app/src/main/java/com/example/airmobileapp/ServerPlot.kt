@@ -32,10 +32,6 @@ class ServerPlot(private val ip: String, context: Context) {
         updateScript()
         val result = getResponse(time)
         json = JSONTokener(result).nextValue() as JSONObject
-//        signal1val = json.getDouble("Pressure")
-//        signal2val = json.getDouble("Humidity")
-//        Log.i("Pressure", signal1val.toString())
-//        Log.i("Humidity", signal2val.toString())
         signal1val = json.getDouble(val1)
         signal2val = json.getDouble(val2)
         Log.i(val1, signal1val.toString())
@@ -48,7 +44,7 @@ class ServerPlot(private val ip: String, context: Context) {
     }
 
     private fun getResponse(t: Double): String {
-        val url: String = protocol + ip + script
+        val url = "$protocol$ip:$port$script"
 //        val url: String = "https://api.coingecko.com/api/v3/ping"
         Log.i("##URL##", url)
         val time = t.toLong()

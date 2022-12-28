@@ -13,7 +13,7 @@ import android.widget.EditText
 import kotlinx.android.synthetic.main.activity_main.*
 
 var ip: String = "192.168.56.15"
-var port: Int = 22
+var port: Int = 80
 var sampling: Double = 1.0
 
 class MainActivity : AppCompatActivity() {
