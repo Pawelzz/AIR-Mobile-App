@@ -36,7 +36,6 @@ class ServerTable(private val ip: String, context: Context) {
         val cX = json.getDouble("counter_x")
         val cY = json.getDouble("counter_y")
         return arrayOf(roll, pitch, yaw, press, temp, humid, cMid, cX, cY)
-//        return arrayOf(0.0)
     }
 
     fun resetRequestCounter() {

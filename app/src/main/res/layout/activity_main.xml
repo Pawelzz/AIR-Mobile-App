@@ -44,89 +44,126 @@
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="300dp"
-        android:layout_height="500dp"
-        android:layout_marginStart="50dp"
-        android:layout_marginTop="100dp"
-        android:layout_marginEnd="50dp"
-        android:layout_marginBottom="100dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="50dp"
         android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout4"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <TableRow
+        <ImageView
+            android:id="@+id/imageView"
             android:layout_width="match_parent"
-            android:layout_height="100dp" >
+            android:layout_height="250dp"
+            android:layout_marginTop="10dp"
+            android:src="@drawable/sensehat" />
 
-            <TextView
-                android:id="@+id/textView1"
-                android:layout_width="133dp"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:text="Adres IP:"
-                android:textAlignment="textStart"
-                android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                tools:ignore="RtlCompat" />
-
-            <EditText
-                android:id="@+id/ip_input"
-                android:layout_width="173dp"
-                android:layout_height="match_parent"
-                android:text="192.168.56.15"
-                android:textAlignment="textEnd"
-                android:textAppearance="@style/TextAppearance.AppCompat.Large" />
-
-        </TableRow>
-
-        <TableRow
+        <TextView
+            android:id="@+id/textView"
             android:layout_width="match_parent"
-            android:layout_height="100dp" >
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:layout_marginHorizontal="10dp"
+            android:text="Settings"
+            android:textColor="#000000"
+            android:textStyle="bold"
+            android:textSize="30sp" />
 
-            <TextView
-                android:id="@+id/port_input"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:text="Numer portu:"
-                android:textAlignment="textStart"
-                android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                tools:ignore="RtlCompat" />
-
-            <EditText
-                android:id="@+id/textView4"
-                android:layout_width="172dp"
-                android:layout_height="match_parent"
-                android:text="22"
-                android:textAlignment="textEnd"
-                android:textAppearance="@style/TextAppearance.AppCompat.Large" />
-
-        </TableRow>
-
-        <TableRow
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="100dp" >
+            android:layout_height="match_parent"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="0dp"
+            android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/textView5"
-                android:layout_width="140dp"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:text="Próbkowanie: (Hz)"
-                android:textAlignment="textStart"
-                android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                tools:ignore="RtlCompat" />
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="50dp">
 
-            <EditText
-                android:id="@+id/sampling_input"
-                android:layout_width="158dp"
-                android:layout_height="match_parent"
-                android:text="1"
-                android:textAlignment="textEnd"
-                android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+                <TextView
+                    android:id="@+id/textView1"
+                    android:layout_width="200dp"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="IP address"
+                    android:textAlignment="textStart"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                    tools:ignore="RtlCompat" />
 
-        </TableRow>
+                <EditText
+                    android:id="@+id/ip_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:digits="0123456789."
+                    android:focusable="true"
+                    android:inputType="number"
+                    android:text="192.168.56.15"
+                    android:textAlignment="textEnd"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="50dp">
+
+                <TextView
+                    android:id="@+id/textView2"
+                    android:layout_width="200dp"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="Port number"
+                    android:textAlignment="textStart"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                    tools:ignore="RtlCompat" />
+
+                <EditText
+                    android:id="@+id/port_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="number"
+                    android:text="22"
+                    android:textAlignment="textEnd"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="50dp">
+
+                <TextView
+                    android:id="@+id/textView5"
+                    android:layout_width="200dp"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="Sampling (Hz)"
+                    android:textAlignment="textStart"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                    tools:ignore="RtlCompat" />
+
+                <EditText
+                    android:id="@+id/sampling_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="numberDecimal"
+                    android:text="1"
+                    android:textAlignment="textEnd"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+
+            </TableRow>
+
+            <Button
+                android:id="@+id/btn_save"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="SAVE"
+                android:layout_marginHorizontal="100dp"/>
+        </LinearLayout>
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

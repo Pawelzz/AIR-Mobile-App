@@ -11,7 +11,7 @@ import java.util.*
 class TableActivity : AppCompatActivity() {
     lateinit var server: ServerTable
     private var sampleFreq: Double = 1.0
-    private lateinit var timer: Timer
+    private lateinit var timerTable: Timer
     private var run: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,21 +42,22 @@ class TableActivity : AppCompatActivity() {
 
         server = ServerTable("192.168.56.15", this)
         server.resetRequestCounter()
-        timer = Timer()
         run = true
-        val timerTask: TimerTask = object : TimerTask() {
-            override fun run() {
-                runRequests()
-            }
-        }
-        val period = 1.0/sampleFreq*1000
-        Log.i("Period", period.toString())
-        timer.scheduleAtFixedRate(timerTask, 0, period.toLong())
+        timerTable = Timer()
+//        prepareTimer()
+//        run = true
+//        val timerTask: TimerTask = object : TimerTask() {
+//            override fun run() {
+//                runRequests()
+//            }
+//        }
+//        val period = 1.0/sampleFreq*1000
+//        Log.i("Period", period.toString())
+//        timer.scheduleAtFixedRate(timerTask, 0, period.toLong())
     }
 
     private fun runRequests() {
         if(run) {
-            Log.i("****WHILE****","ADDED request")
             val measurements: Array<Double> = server.getMeasurements(sampleFreq)
 
             runOnUiThread {
@@ -66,11 +67,23 @@ class TableActivity : AppCompatActivity() {
                 valPress.text = measurements[3].toString()
                 valTemp.text = measurements[4].toString()
                 valHumidity.text = measurements[5].toString()
-                valMid.text = measurements[6].toString()
-                valX.text = measurements[7].toString()
-                valY.text = measurements[8].toString()
+                valMid.text = measurements[6].toInt().toString()
+                valX.text = measurements[7].toInt().toString()
+                valY.text = measurements[8].toInt().toString()
             }
         }
+    }
+
+    private fun prepareTimer() {
+//        timer = Timer()
+        val timerTask: TimerTask = object : TimerTask() {
+            override fun run() {
+                runRequests()
+            }
+        }
+        val period = 1.0/sampleFreq*1000
+        Log.i("Period", period.toString())
+        timerTable.scheduleAtFixedRate(timerTask, 0, period.toLong())
     }
 
     override fun onDestroy() {
@@ -81,13 +94,14 @@ class TableActivity : AppCompatActivity() {
     override fun onPause() {
         super.onPause()
         run = false
-        timer.cancel()
+        timerTable.cancel()
+        timerTable.purge()
         Log.i("onPause", "ACTIVITY PAUSED")
     }
 
     override fun onResume() {
         super.onResume()
-        run = true
-        Log.i("onPause", "ACTIVITY RESUMED")
+        prepareTimer()
+        Log.i("onResume", "ACTIVITY RESUMED")
     }
 }
