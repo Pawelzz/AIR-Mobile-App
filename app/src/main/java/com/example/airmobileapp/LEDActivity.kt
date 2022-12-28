@@ -102,7 +102,7 @@ class LEDActivity : AppCompatActivity() {
         blueSeekBar = findViewById<SeekBar>(R.id.seekBarB)
         colorView = findViewById(R.id.colorView)
 
-        url = "http://192.168.56.15/LED.php"
+        url = "http://$ip/LED.php"
 
 //        clearDisplayModel()
 
@@ -340,6 +340,10 @@ class LEDActivity : AppCompatActivity() {
             DefaultRetryPolicy.DEFAULT_BACKOFF_MULT
         )
         queue!!.add(postRequest)
+
+//        Log.i("chuj", R.id.ip_input.toString())
+//        Log.i("chuj", R.id.port_input.toString())
+//        Log.i("chuj", R.id.sampling_input.toString())
     }
 
 
