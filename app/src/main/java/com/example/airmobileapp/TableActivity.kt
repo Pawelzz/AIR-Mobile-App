@@ -10,7 +10,7 @@ import java.util.*
 
 class TableActivity : AppCompatActivity() {
     lateinit var server: ServerTable
-    private var sampleFreq: Double = 1.0
+    private var sampleFreq: Double = sampling
     private lateinit var timerTable: Timer
     private var run: Boolean = false
 
@@ -40,7 +40,7 @@ class TableActivity : AppCompatActivity() {
         }
         Log.i("onCreate", "ACTIVITY CREATED")
 
-        server = ServerTable("192.168.56.15", this)
+        server = ServerTable(ip, this)
         server.resetRequestCounter()
         run = true
         timerTable = Timer()

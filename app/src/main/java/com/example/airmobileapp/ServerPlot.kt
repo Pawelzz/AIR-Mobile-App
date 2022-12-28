@@ -17,8 +17,7 @@ class ServerPlot(private val ip: String, context: Context) {
     private var protocol: String = "http://"
     var val1: String = "pressure=Pa"
     var val2: String = "humidity=Prcnt"
-//    private var script: String = "/control.php?task=sensors&pressure=Pa&humidity=Prcnt"
-private var script: String = "/control.php?task=sensors&$val1&$val2"
+    private var script: String = "/control.php?task=sensors&$val1&$val2"
     private var timeout: Int = 1000
     var requestCounter: Int = -1
     private var signal1val: Double = 0.0
@@ -28,6 +27,7 @@ private var script: String = "/control.php?task=sensors&$val1&$val2"
     private var queue: RequestQueue = Volley.newRequestQueue(context.applicationContext)
 
     fun getSignals(t: Double): Array<Double> {
+        Log.i("CHECK IP PLOT", ip)
         val time = timeout/t
         updateScript()
         val result = getResponse(time)

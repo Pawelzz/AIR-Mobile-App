@@ -23,6 +23,7 @@ class ServerTable(private val ip: String, context: Context) {
     private var queue: RequestQueue = Volley.newRequestQueue(context.applicationContext)
 
     fun getMeasurements(t: Double): Array<Double> {
+        Log.i("CHECK IP TABLE", ip)
         val time = timeout/t
         val result = getResponse(time)
         json = JSONTokener(result).nextValue() as JSONObject

@@ -60,7 +60,8 @@ class PlotActivity : AppCompatActivity() {
 //        Log.i("onCreate", "PLOT ACTIVITY CREATED")
 
         chartInit()
-        server = ServerPlot("192.168.56.15", this)
+//        server = ServerPlot("192.168.56.15", this)
+        server = ServerPlot(ip, this)
 
         // Bind OnClickListener to button
         runBtn.setOnClickListener {

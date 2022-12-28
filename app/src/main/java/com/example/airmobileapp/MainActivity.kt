@@ -12,11 +12,11 @@ import android.widget.Button
 import android.widget.EditText
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : AppCompatActivity() {
+var ip: String = "192.168.56.15"
+var port: Int = 22
+var sampling: Double = 1.0
 
-    var ip: String = "192.168.56.15"
-    var port: Int = 22
-    var sampling: Double = 1.0
+class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,19 +42,12 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, TableActivity::class.java)
             startActivity(intent)
         }
-//        var btn = findViewById<Button>(R.id.btn_save)
         btn_save.setOnClickListener {
-//            ip = ip_input.text.toString()
-//            port = port_input.text.toString()
-//            sampling = sampling_input.text.toString()
             ip = ip_input.text.toString()
             port = port_input.text.toString().toInt()
             sampling = sampling_input.text.toString().toDouble()
             Log.i("onClick", "MAIN ACTIVITY ON CLICK")
         }
-//        ip = ip_input.text.toString()
-//        port = port_input.text.toString().toInt()
-//        sampling = sampling_input.text.toString().toDouble()
         Log.i("onCreate", "MAIN ACTIVITY CREATED")
     }
 
