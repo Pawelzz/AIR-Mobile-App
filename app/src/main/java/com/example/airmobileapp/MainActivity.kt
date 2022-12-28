@@ -10,6 +10,11 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.EditText
+import com.android.volley.DefaultRetryPolicy
+import com.android.volley.RequestQueue
+import com.android.volley.Response
+import com.android.volley.toolbox.StringRequest
+import com.android.volley.toolbox.Volley
 import kotlinx.android.synthetic.main.activity_main.*
 
 var ip: String = "192.168.56.15"
@@ -17,6 +22,10 @@ var port: Int = 80
 var sampling: Double = 1.0
 
 class MainActivity : AppCompatActivity() {
+
+    lateinit var url: String
+    private var queue: RequestQueue? = null
+    private var response: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,13 +51,59 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, TableActivity::class.java)
             startActivity(intent)
         }
+
+        queue = Volley.newRequestQueue(this)
+
+
         btn_save.setOnClickListener {
+
+
+            val ip_prev = ip
+            val port_prev = port
+
+
             ip = ip_input.text.toString()
             port = port_input.text.toString().toInt()
             sampling = sampling_input.text.toString().toDouble()
             Log.i("onClick", "MAIN ACTIVITY ON CLICK")
+
+
+            val ip_next = ip
+            val port_next = port
+
+            url = "http://$ip_prev:$port_prev/config.php?port=$port_next&ip=$ip_next"
+
+            Log.i("URL", url)
+
+
+            val postRequest: StringRequest = object : StringRequest(
+            Method.GET, url,
+            Response.Listener { response ->
+                if (response != "ACK") Log.d(
+                    "Response",
+                    """
+
+                  $response
+                  """.trimIndent()
+                )
+            },
+            Response.ErrorListener { error ->
+                val msg = error.message
+                if (msg != null) Log.d("Error.Response", msg) else {
+                    // TODO: error type specific code
+                }
+            }
+        ) {
+        }
+        postRequest.retryPolicy = DefaultRetryPolicy(
+            5000, 0,
+            DefaultRetryPolicy.DEFAULT_BACKOFF_MULT
+        )
+        queue!!.add(postRequest)
+
         }
         Log.i("onCreate", "MAIN ACTIVITY CREATED")
+
     }
 
     override fun dispatchTouchEvent(ev: MotionEvent): Boolean {
@@ -91,4 +146,38 @@ class MainActivity : AppCompatActivity() {
 
         Log.i("onResume", "MAIN ACTIVITY RESUMED")
     }
+
+
+
+//
+//    fun onBtnDown(v: View) {
+//        val specific_url = "$url?task=click&button=down"
+//        Log.i("URL", specific_url)
+//        val postRequest: StringRequest = object : StringRequest(
+//            Method.GET, specific_url,
+//            Response.Listener { response ->
+//                if (response != "ACK") Log.d(
+//                    "Response",
+//                    """
+//
+//                  $response
+//                  """.trimIndent()
+//                )
+//                updateValues()
+//            },
+//            Response.ErrorListener { error ->
+//                val msg = error.message
+//                if (msg != null) Log.d("Error.Response", msg) else {
+//                    // TODO: error type specific code
+//                }
+//            }
+//        ) {
+//        }
+//        postRequest.retryPolicy = DefaultRetryPolicy(
+//            5000, 0,
+//            DefaultRetryPolicy.DEFAULT_BACKOFF_MULT
+//        )
+//        queue!!.add(postRequest)
+//
+//    }
 }
