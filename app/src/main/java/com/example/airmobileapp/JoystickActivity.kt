@@ -20,6 +20,7 @@ import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import kotlinx.android.synthetic.main.activity_joystick.*
+import kotlinx.android.synthetic.main.activity_main.*
 import org.json.JSONArray
 import java.util.*
 import org.json.JSONObject
@@ -97,7 +98,6 @@ class JoystickActivity : AppCompatActivity() {
             DefaultRetryPolicy.DEFAULT_BACKOFF_MULT
         )
         queue!!.add(postRequest)
-
     }
 
     fun onBtnDown(v: View) {
