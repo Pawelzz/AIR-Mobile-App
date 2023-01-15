@@ -79,7 +79,6 @@ class JoystickActivity : AppCompatActivity() {
                 if (response != "ACK") Log.d(
                     "Response",
                     """
-                  
                   $response
                   """.trimIndent()
                 )
@@ -88,7 +87,6 @@ class JoystickActivity : AppCompatActivity() {
             Response.ErrorListener { error ->
                 val msg = error.message
                 if (msg != null) Log.d("Error.Response", msg) else {
-                    // TODO: error type specific code
                 }
             }
         ) {

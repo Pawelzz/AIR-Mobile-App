@@ -58,48 +58,48 @@ class MainActivity : AppCompatActivity() {
         btn_save.setOnClickListener {
 
 
-            val ip_prev = ip
-            val port_prev = port
+//            val ip_prev = ip
+//            val port_prev = port
 
 
             ip = ip_input.text.toString()
             port = port_input.text.toString().toInt()
             sampling = sampling_input.text.toString().toDouble()
-            Log.i("onClick", "MAIN ACTIVITY ON CLICK")
-
-
-            val ip_next = ip
-            val port_next = port
-
-            url = "http://$ip_prev:$port_prev/config.php?port=$port_next&ip=$ip_next"
-
-            Log.i("URL", url)
-
-
-            val postRequest: StringRequest = object : StringRequest(
-            Method.GET, url,
-            Response.Listener { response ->
-                if (response != "ACK") Log.d(
-                    "Response",
-                    """
-
-                  $response
-                  """.trimIndent()
-                )
-            },
-            Response.ErrorListener { error ->
-                val msg = error.message
-                if (msg != null) Log.d("Error.Response", msg) else {
-                    // TODO: error type specific code
-                }
-            }
-        ) {
-        }
-        postRequest.retryPolicy = DefaultRetryPolicy(
-            5000, 0,
-            DefaultRetryPolicy.DEFAULT_BACKOFF_MULT
-        )
-        queue!!.add(postRequest)
+//            Log.i("onClick", "MAIN ACTIVITY ON CLICK")
+//
+//
+//            val ip_next = ip
+//            val port_next = port
+//
+//            url = "http://$ip_prev:$port_prev/config.php?port=$port_next&ip=$ip_next"
+//
+//            Log.i("URL", url)
+//
+//
+//            val postRequest: StringRequest = object : StringRequest(
+//            Method.GET, url,
+//            Response.Listener { response ->
+//                if (response != "ACK") Log.d(
+//                    "Response",
+//                    """
+//
+//                  $response
+//                  """.trimIndent()
+//                )
+//            },
+//            Response.ErrorListener { error ->
+//                val msg = error.message
+//                if (msg != null) Log.d("Error.Response", msg) else {
+//                    // TODO: error type specific code
+//                }
+//            }
+//        ) {
+//        }
+//        postRequest.retryPolicy = DefaultRetryPolicy(
+//            5000, 0,
+//            DefaultRetryPolicy.DEFAULT_BACKOFF_MULT
+//        )
+//        queue!!.add(postRequest)
 
         }
         Log.i("onCreate", "MAIN ACTIVITY CREATED")

@@ -293,7 +293,6 @@ class LEDActivity : AppCompatActivity() {
                 if (response != "ACK") Log.d(
                     "Response",
                     """
-                  
                   $response
                   """.trimIndent()
                 )
@@ -354,19 +353,13 @@ class LEDActivity : AppCompatActivity() {
             Response.Listener { response ->
                 Log.d("Response", response!!)
                 get_Json(response)
-                // TODO: check if ACK is valid
-
             },
             Response.ErrorListener { error ->
                 val msg = error.message
                 if (msg != null) Log.d("Error.Response", msg) else {
-                    // TODO: error type specific code
                 }
             }
         ) {
-//            override fun getParams(): Map<String, String> {
-//                return paramsClear
-//            }
         }
         getRequest.retryPolicy = DefaultRetryPolicy(
             5000, 0,
